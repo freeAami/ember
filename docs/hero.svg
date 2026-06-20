@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 420" width="1200" height="420" font-family="Inter, system-ui, sans-serif">
+  <defs>
+    <radialGradient id="a1" cx="18%" cy="0%" r="70%">
+      <stop offset="0" stop-color="#ff8a4c" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#ff8a4c" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="a2" cx="100%" cy="10%" r="60%">
+      <stop offset="0" stop-color="#7d93ff" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#7d93ff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="flame" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffb27e"/>
+      <stop offset="1" stop-color="#ff8a4c"/>
+    </linearGradient>
+    <linearGradient id="ring" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ff8a4c"/>
+      <stop offset="1" stop-color="#7d93ff"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="420" rx="24" fill="#0a0a0c"/>
+  <rect width="1200" height="420" rx="24" fill="url(#a1)"/>
+  <rect width="1200" height="420" rx="24" fill="url(#a2)"/>
+
+  <!-- mark -->
+  <g transform="translate(96 150)">
+    <rect width="120" height="120" rx="30" fill="#ffffff" fill-opacity="0.04" stroke="#ffffff" stroke-opacity="0.08"/>
+    <path d="M 60 26 C 75 50 80 62 80 78 A 22 22 0 1 1 40 78 C 40 68 46 60 52 56 C 50 68 54 74 60 78 C 54 62 58 44 60 26 Z" fill="url(#flame)"/>
+  </g>
+
+  <!-- wordmark + tagline -->
+  <text x="260" y="180" fill="#ffffff" font-size="76" font-weight="700" letter-spacing="-3">Ember</text>
+  <text x="262" y="232" fill="#ffffff" fill-opacity="0.55" font-size="26" font-weight="500">A local-first daily operating system.</text>
+  <text x="262" y="276" fill="#ff8a4c" fill-opacity="0.9" font-size="16" font-weight="600" letter-spacing="3">CALM · PREMIUM · INTENTIONAL · OFFLINE</text>
+
+  <!-- day ring motif -->
+  <g transform="translate(1000 210)">
+    <circle r="92" fill="none" stroke="#ffffff" stroke-opacity="0.05" stroke-width="14"/>
+    <circle r="92" fill="none" stroke="url(#ring)" stroke-width="14" stroke-linecap="round"
+            stroke-dasharray="578" stroke-dashoffset="150" transform="rotate(-90)"/>
+    <circle r="62" fill="none" stroke="#ffffff" stroke-opacity="0.05" stroke-width="14"/>
+    <circle r="62" fill="none" stroke="#ff8a4c" stroke-width="14" stroke-linecap="round"
+            stroke-dasharray="390" stroke-dashoffset="120" transform="rotate(-90)"/>
+    <text text-anchor="middle" y="6" fill="#ffffff" font-size="34" font-weight="600">72%</text>
+    <text text-anchor="middle" y="30" fill="#ffffff" fill-opacity="0.4" font-size="13">of today</text>
+  </g>
+</svg>

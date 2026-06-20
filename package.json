@@ -1,0 +1,41 @@
+{
+  "name": "ember",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "A local-first daily operating system. Calm, premium, intentional.",
+  "license": "MIT",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc -b"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "framer-motion": "^11.3.19",
+    "lucide-react": "^0.428.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "recharts": "^2.12.7",
+    "zustand": "^4.5.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.40",
+    "tailwindcss": "^3.4.7",
+    "typescript": "^5.5.4",
+    "vite": "^7.1.5",
+    "vite-plugin-pwa": "^1.0.1"
+  },
+  "overrides": {
+    "esbuild": "^0.25.12"
+  },
+  "engines": {
+    "node": ">=20.19"
+  }
+}

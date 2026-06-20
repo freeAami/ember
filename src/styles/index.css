@@ -1,0 +1,197 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ───────────────────────────────────────────────────────────
+   Ember — design tokens
+   Accent is delivered as raw RGB channels so Tailwind's
+   `rgb(var(--accent) / <alpha>)` and runtime theming both work.
+   ─────────────────────────────────────────────────────────── */
+:root {
+  --accent: 255 138 76; /* ember */
+  --accent-soft: 255 178 130;
+  --line: 255 255 255; /* used at low alpha for hairlines */
+
+  --bg: 10 10 12;
+  --grain-opacity: 0.045;
+  --motion-scale: 1; /* multiplied into durations; 0 when reduce-motion */
+
+  --ease-spring: cubic-bezier(0.22, 1, 0.36, 1);
+  --radius: 18px;
+}
+
+* {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: rgb(var(--bg));
+  color: rgba(255, 255, 255, 0.92);
+  font-family: 'Inter', system-ui, sans-serif;
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'ss01';
+  overflow: hidden; /* the app manages its own scroll regions */
+}
+
+/* Ambient aurora wash — anchors the dark canvas without noise */
+.app-aurora {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(60% 50% at 15% 0%, rgb(var(--accent) / 0.10), transparent 70%),
+    radial-gradient(50% 45% at 100% 10%, rgb(var(--accent-soft) / 0.06), transparent 70%),
+    radial-gradient(80% 60% at 50% 120%, rgb(80 90 140 / 0.10), transparent 70%);
+  filter: saturate(1.1);
+}
+
+/* Film grain — fixed overlay using inline SVG fractal noise */
+.app-grain {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 50;
+  opacity: var(--grain-opacity);
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ─── Glass surface ─────────────────────────────────────────── */
+.glass {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.045),
+    rgba(255, 255, 255, 0.015)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(20px) saturate(1.2);
+  -webkit-backdrop-filter: blur(20px) saturate(1.2);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.05),
+    0 12px 40px -16px rgba(0, 0, 0, 0.7);
+}
+
+.glass-hairline {
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Subtle top-edge sheen on raised cards */
+.sheen::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.12),
+    rgba(255, 255, 255, 0) 40%
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* ─── Scrollbars ────────────────────────────────────────────── */
+.scroll-region {
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.12) transparent;
+}
+.scroll-region::-webkit-scrollbar {
+  width: 10px;
+}
+.scroll-region::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+.scroll-region::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+  background-clip: content-box;
+}
+
+/* ─── Focus ring ────────────────────────────────────────────── */
+:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgb(var(--bg)), 0 0 0 4px rgb(var(--accent) / 0.7);
+  border-radius: 10px;
+}
+
+::selection {
+  background: rgb(var(--accent) / 0.3);
+  color: #fff;
+}
+
+/* Numeric tabular alignment for tickers and counters */
+.tnum {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Shimmer for skeletons */
+.shimmer {
+  position: relative;
+  overflow: hidden;
+}
+.shimmer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.06),
+    transparent
+  );
+  animation: shimmer 1.6s infinite;
+}
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Ticker marquee */
+@keyframes ticker {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.ticker-track {
+  animation: ticker var(--ticker-duration, 40s) linear infinite;
+}
+
+/* Honour reduced-motion preference globally */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* When user toggles reduce-motion in settings */
+.reduce-motion *,
+.reduce-motion *::before,
+.reduce-motion *::after {
+  animation-duration: 0.001ms !important;
+  transition-duration: 0.001ms !important;
+}
