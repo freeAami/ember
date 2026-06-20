@@ -28,8 +28,11 @@ jobs:
           node-version: 20
           cache: npm
 
-      - name: Install (clean, from lockfile)
-        run: npm ci
+      # `npm install` (not `npm ci`) so the correct platform-specific Rollup/
+      # esbuild optional binaries resolve on the runner — works around
+      # npm/cli#4828 when the lockfile is generated on another platform.
+      - name: Install
+        run: npm install --no-audit --no-fund
 
       - name: Typecheck
         run: npm run typecheck
