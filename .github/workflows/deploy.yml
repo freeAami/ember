@@ -28,10 +28,10 @@ jobs:
         with:
           node-version: 20
 
-      # `npm install` resolves the runner's platform-specific Rollup/esbuild
-      # binaries (works around npm/cli#4828 with cross-platform lockfiles).
+      # Drop the lockfile so npm resolves the runner's own platform-specific
+      # Rollup/esbuild optional binaries (works around npm/cli#4828).
       - name: Install
-        run: npm install --no-audit --no-fund
+        run: rm -f package-lock.json && npm install --no-audit --no-fund
 
       - name: Build
         run: npm run build
