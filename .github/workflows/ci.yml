@@ -16,7 +16,7 @@ concurrency:
 
 jobs:
   build:
-    name: Typecheck, build & audit
+    name: Typecheck, test, build & audit
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -35,6 +35,9 @@ jobs:
 
       - name: Typecheck
         run: npm run typecheck
+
+      - name: Test
+        run: npm run test
 
       - name: Build
         run: npm run build
